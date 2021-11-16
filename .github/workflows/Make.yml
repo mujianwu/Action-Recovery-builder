@@ -1,3 +1,4 @@
+
 name: Make Recovery
 
 on:
@@ -14,11 +15,11 @@ on:
       LIBRARY_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
-        default: 'twrp-11'
+        default: 'twrp-10.0'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
-        default: 'https://github.com/Xpsoted/android_device_alps_Z32P-TWRP'
+        default: 'https://github.com/Xpsoted/android_device_qualcomm_qrd855-TWRP'
       DEVICE_BRANCH:
         description: 'DEVICE_BRANCH'
         required: true
@@ -26,11 +27,11 @@ on:
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/alps/Z32P'
+        default: 'device/qualcomm/msmnile'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'k61v1_64_bsp'
+        default: 'msmnile'
 
 jobs:
   build:
@@ -85,9 +86,7 @@ jobs:
       run: |
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
-        wget https://erratic-artistic-ash.glitch.me/k61v1_64_bsp.zip .device/duoqin/
-        unzip ./device/duoqin/k61v1_64_bsp.zip
-        rm -rf ./device/duoqin/k61v1_64_bsp.zip
+        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
     - name: Building
       run: |
         PATH=~/bin:$PATH
@@ -97,7 +96,6 @@ jobs:
         lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
         make clean
         make recoveryimage -j$(nproc --all)
-
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
