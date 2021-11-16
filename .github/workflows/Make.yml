@@ -81,7 +81,12 @@ jobs:
       run: |
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
-        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+        wget https://github.com/Xpsoted/recovery_device_xiaomi_ares/releases/download/1/k61v1.zip
+        mkdir device/duoqin/
+        mv k61v1.zip device/duoqin/
+        unzip device/duoqin/k61v1.zip
+        rm -rf device/duoqin/k61v1.zip
+
     - name: Building
       run: |
         PATH=~/bin:$PATH
