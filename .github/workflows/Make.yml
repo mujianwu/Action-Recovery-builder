@@ -14,7 +14,7 @@ on:
       LIBRARY_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
-        default: 'twrp-10.0'
+        default: 'twrp-11.0'
       DEVICE_URL:
         description: 'DEVICE_URL'
         required: true
@@ -30,7 +30,7 @@ on:
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'Z32P'
+        default: 'k61v1_64_bsp'
 
 jobs:
   build:
@@ -85,8 +85,9 @@ jobs:
       run: |
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
-        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
-
+        wget https://erratic-artistic-ash.glitch.me/k61v1_64_bsp.zip .device/duoqin/
+        unzip ./device/duoqin/k61v1_64_bsp.zip
+        rm -rf ./device/duoqin/k61v1_64_bsp.zip
     - name: Building
       run: |
         PATH=~/bin:$PATH
