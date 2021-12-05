@@ -21,11 +21,11 @@
 
 | 名称 | 描述 | 示例 |
 | ------------ | -------------------- | ------------ |
-| `LIBRARY_NAME` | 源码类型 | omni |
-| `LIBRARY_URL` | 源码地址 | https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git |
-| `LIBRARY_BRANCH` | 源码分支 | twrp-9.0 |
-| `DEVICE_URL` | 设备地址 | https://github.com/azwhikaru/twrp_device_xiaomi_archytas |
-| `DEVICE_BRANCH` | 设备分支 | twrp-9.0 |
+| `MANIFEST_TYPE` | 源码类型 | omni |
+| `MANIFEST_URL` | 源码地址 | https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git |
+| `MANIFEST_BRANCH` | 源码分支 | twrp-9.0 |
+| `DEVICE_TREE_URL` | 设备地址 | https://github.com/azwhikaru/twrp_device_xiaomi_archytas |
+| `DEVICE_TREE_BRANCH` | 设备分支 | twrp-9.0 |
 | `DEVICE_PATH` | 设备位置 | device/xiaomi/Archytas |
 | `DEVICE_NAME` | 机型名称 | Archytas |
 
