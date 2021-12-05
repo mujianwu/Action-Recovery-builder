@@ -1,26 +1,26 @@
-name: Make Recovery
+name: Android-Recovery-Builder
 
 on:
   workflow_dispatch:
     inputs:
-      LIBRARY_NAME:
-        description: 'LIBRARY_NAME'
+      MANIFEST_TYPE:
+        description: 'MANIFEST_TYPE'
         required: true
         default: 'omni'
-      LIBRARY_URL:
-        description: 'LIBRARY_URL'
+      MANIFEST_URL:
+        description: 'MANIFEST_URL'
         required: true
         default: 'git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git'
-      LIBRARY_BRANCH:
+      MANIFEST_BRANCH:
         description: 'LIBRARY_BRANCH'
         required: true
         default: 'twrp-9.0'
-      DEVICE_URL:
-        description: 'DEVICE_URL'
+      DEVICE_TREE_URL:
+        description: 'DEVICE_TREE_URL'
         required: true
         default: 'https://github.com/azwhikaru/twrp_device_xiaomi_archytas'
-      DEVICE_BRANCH:
-        description: 'DEVICE_BRANCH'
+      DEVICE_TREE_BRANCH:
+        description: 'DEVICE_TREE_BRANCH'
         required: true
         default: 'twrp-9.0'
       DEVICE_PATH:
@@ -73,7 +73,7 @@ jobs:
         echo "::set-output name=pwd::$(pwd)"
         git config --global user.name "Hikaru's Action-Build-Bot"
         git config --global user.email "Android@teio.tk"
-        repo init --depth=1 -u ${{ github.event.inputs.LIBRARY_URL }} -b ${{ github.event.inputs.LIBRARY_BRANCH }}
+        repo init --depth=1 -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
       id: pwd
           
     - name: Repo Sync
@@ -83,19 +83,19 @@ jobs:
         repo sync -j$(nproc --all) -f --force-sync
         ls -al
       
-    - name: Clone device
+    - name: Clone device tree
       run: |
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
-        git clone ${{ github.event.inputs.DEVICE_URL }} -b ${{ github.event.inputs.DEVICE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
+        git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
 
-    - name: Building
+    - name: Building recovery
       run: |
         PATH=~/bin:$PATH
         cd ${{ steps.pwd.outputs.pwd }}
         export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch ${{ github.event.inputs.LIBRARY_NAME }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
+        lunch ${{ github.event.inputs.MANIFEST_TYPE }}_${{ github.event.inputs.DEVICE_NAME }}-eng 
         make clean
         make recoveryimage -j$(nproc --all)        
       
