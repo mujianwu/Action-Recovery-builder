@@ -25,7 +25,7 @@ on:
         default: 'twrp-9.0'
       DEVICE_PATH:
         description: 'DEVICE_PATH'
-        required: true
+        required: false
         default: 'device/xiaomi/Archytas'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
